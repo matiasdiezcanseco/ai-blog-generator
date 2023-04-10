@@ -2,6 +2,12 @@
 
 A Solid Start project to generate blog posts with AI.
 
+## Caveats
+
+- Env variables are tricky to load.
+- Consuming api endpoints with relative path in the routeData is complex.
+- For the 2 prior points, the all service url are prefixed with localhost:3000
+
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:

@@ -1,6 +1,6 @@
+type PostParagraph = { tag: 'subtitle' | 'paragraph'; content: string }
+
 export type Post = {
-  title: string;
-  introduction: string;
-  body: string[];
-  conclusion: string;
-};
+  title: string
+  content: PostParagraph[]
+}

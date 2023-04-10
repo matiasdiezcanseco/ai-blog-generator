@@ -9,10 +9,11 @@ export function routeData() {
   const { id } = useParams()
   return createRouteData(async () => {
     const response = await axios.get(`http://localhost:3000/api/posts/${id}`)
-    const post = response.data.data.post
-    return { content: post } as Post
+    const post = response.data.data
+    return post as Post
   })
 }
+
 export default function Home() {
   const post = useRouteData<typeof routeData>()
 

@@ -2,12 +2,13 @@ import axios from 'axios'
 import { APIEvent, json } from 'solid-start/api'
 import openai from '~/server/openai'
 
-export async function POST({ request }: APIEvent) {
+export async function POST({ request, fetch }: APIEvent) {
   const body = await request.json()
   const { length = 4, prompt } = body
   if (!prompt) return json({ status: 400, message: 'Missing prompt' })
 
   let post = ''
+  let postTitle = ''
   try {
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
@@ -34,6 +35,26 @@ export async function POST({ request }: APIEvent) {
       return json({ status: 500, message: 'Malformed post from openai' })
 
     post = post.substring(initialPos, finalPos)
+
+    const initialTitlePos = post.indexOf('<h1>') + 4
+    const finalTitlePos = post.indexOf('</h1>')
+    if (initialTitlePos === -1 || finalTitlePos === -1)
+      return json({ status: 500, message: 'Malformed post from openai' })
+
+    postTitle = post.substring(initialTitlePos, finalTitlePos)
+  } catch (e: any) {
+    return json({
+      status: e?.response?.status || 500,
+      message: e?.response?.statusText || 'Server error',
+    })
+  }
+
+  let url = ''
+  try {
+    const response = await axios.post('http://localhost:3000/api/generate-image', {
+      prompt: prompt,
+    })
+    url = response.data.data.url
   } catch (e: any) {
     return json({
       status: e?.response?.status || 500,
@@ -42,8 +63,8 @@ export async function POST({ request }: APIEvent) {
   }
 
   try {
-    await axios.post(`${process.env.DB_HOST}/posts`, { content: post })
-    return json({ status: 200, data: post })
+    await axios.post(`${process.env.DB_HOST}/posts`, { content: post, url, title: postTitle })
+    return json({ status: 200, data: post, url })
   } catch (e: any) {
     return json({
       status: e?.response?.status || 500,

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { APIEvent, json } from 'solid-start/api'
 
-export async function GET({ params }: APIEvent) {
+export async function GET() {
   try {
-    const response = await axios.get(`${process.env.DB_HOST}/posts/${params.id}`)
+    const response = await axios.get(`${process.env.DB_HOST}/posts`)
     const post = response.data
     return json({
       status: 200,

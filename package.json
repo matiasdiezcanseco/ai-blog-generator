@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "json-server": "json-server --watch db.json --port 3001"
   },
   "type": "module",
   "devDependencies": {
@@ -19,6 +20,8 @@
   "dependencies": {
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
+    "axios": "^1.3.5",
+    "json-server": "^0.17.3",
     "openai": "^3.2.1",
     "solid-js": "^1.7.2",
     "solid-start": "^0.2.26",

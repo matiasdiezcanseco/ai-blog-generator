@@ -2,7 +2,7 @@ import axios from 'axios'
 import { APIEvent, json } from 'solid-start/api'
 import openai from '~/server/openai'
 
-export async function POST({ request, fetch }: APIEvent) {
+export async function POST({ request }: APIEvent) {
   const body = await request.json()
   const { length = 4, prompt } = body
   if (!prompt) return json({ status: 400, message: 'Missing prompt' })

@@ -1,8 +1,8 @@
-import { createSignal } from "solid-js";
-import { A } from "solid-start";
+import { A, useNavigate } from 'solid-start'
+import { search, setSearch } from '~/store/search'
 
 const Header = () => {
-  const [search, setSearch] = createSignal("");
+  const navigate = useNavigate()
 
   return (
     <header class="bg-white border-[1px] border-b-slate-300 p-2">
@@ -21,7 +21,10 @@ const Header = () => {
             class="border-[1px] border-slate-300 rounded-md p-2 outline-blue-600"
             type="text"
             value={search()}
-            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={(e) => {
+              navigate('/')
+              setSearch(e.currentTarget.value)
+            }}
           />
         </div>
         <div>
@@ -31,7 +34,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

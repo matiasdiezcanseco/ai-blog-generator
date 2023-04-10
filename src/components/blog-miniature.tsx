@@ -9,9 +9,9 @@ interface BlogMiniatureProps {
 const BlogMiniature: Component<BlogMiniatureProps> = ({ post }) => {
   return (
     <A href={`/posts/${post.id}`}>
-      <div class="border-[1px] border-slate-300  rounded-md flex flex-col items-center overflow-hidden">
-        <div class="w-full">
-          <img class="w-full" src={post.url} alt={post.title} />
+      <div class="border-[1px] border-slate-300  rounded-md flex flex-col items-center overflow-hidden max-w-lg">
+        <div class="max-w-lg">
+          <img class="max-w-lg" src={post.url} alt={post.title} />
         </div>
         <div class="p-2">
           <h4 class="font-semibold text-lg">{post.title}</h4>
